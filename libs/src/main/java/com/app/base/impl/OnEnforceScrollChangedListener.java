@@ -3,7 +3,8 @@ package com.app.base.impl;
 import android.view.View;
 import android.view.ViewTreeObserver;
 
-import com.app.base.util.*;
+import com.app.tool.Tools;
+
 
 public class OnEnforceScrollChangedListener implements ViewTreeObserver.OnScrollChangedListener{
     private View mView;
@@ -18,6 +19,6 @@ public class OnEnforceScrollChangedListener implements ViewTreeObserver.OnScroll
 
     @Override
     public void onScrollChanged(){
-        ViewUtils.changeSize(mView,width,height);
+        Tools.Views.changeSize(mView,width,height);
     }
 }

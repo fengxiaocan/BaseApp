@@ -5,7 +5,7 @@ import android.view.KeyEvent;
 import android.view.View;
 
 import com.app.base.intface.*;
-import com.app.base.util.*;
+import com.app.tool.Tools;
 
 
 /**
@@ -28,7 +28,7 @@ public class OnKeyListenerAdapter implements View.OnKeyListener{
     public boolean onKey(View v, int keyCode, KeyEvent event){
         if(keyCode == KeyEvent.KEYCODE_ENTER){
             // 先隐藏键盘
-            KeyboardUtils.hideSoftInput(mContext,v);
+            Tools.Keyboard.hideSoftInput(mContext,v);
             //进行搜索操作的方法，在该方法中可以加入mEditSearchUser的非空判断
             mMethodCallback.method();
         }

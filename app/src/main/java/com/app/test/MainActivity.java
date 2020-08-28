@@ -2,6 +2,7 @@ package com.app.test;
 
 import android.os.Bundle;
 
+import com.app.base.dialog.ProgressDialogHelper;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
@@ -30,6 +31,7 @@ public class MainActivity extends AppCompatActivity {
                         .setAction("Action", null).show();
             }
         });
+        ProgressDialogHelper.with(this).show();
     }
 
     @Override
