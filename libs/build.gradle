@@ -28,6 +28,6 @@ android {
 dependencies {
     implementation 'androidx.appcompat:appcompat:latest.release'
     implementation 'com.google.android.material:material:latest.release'
-    implementation 'com.github.fengxiaocan:Tools:latest.release'
+    implementation 'com.github.fengxiaocan:Tools:v1.0.2'
     implementation 'org.litepal.android:java:latest.release'
 }
