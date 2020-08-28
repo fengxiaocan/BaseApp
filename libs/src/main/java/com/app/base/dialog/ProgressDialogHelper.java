@@ -63,7 +63,6 @@ public class ProgressDialogHelper {
             helper = new ProgressDialogHelper(context);
             helperHashMap.put(key, helper);
             if (context instanceof AppCompatActivity) {
-                //shi Activity
                 ((AppCompatActivity) context).getLifecycle().addObserver(new LifecycleEventObserver() {
                     @Override
                     public void onStateChanged(@NonNull LifecycleOwner source,
