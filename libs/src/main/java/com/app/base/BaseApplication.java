@@ -5,7 +5,6 @@ import android.content.IntentFilter;
 import android.net.ConnectivityManager;
 import android.os.Build;
 
-import com.app.base.litepal.*;
 import com.app.base.received.*;
 import com.app.tool.Tools;
 
@@ -37,7 +36,6 @@ public class BaseApplication extends Application {
      * Init create.初始化入口
      */
     public void initCreate(){
-        RxLitepal.initialize(this);
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
             IntentFilter intentFilter = new IntentFilter();
             intentFilter.addAction(ConnectivityManager.CONNECTIVITY_ACTION);  //广播接收器想要监听什么广播，就在这里添加相应的action
