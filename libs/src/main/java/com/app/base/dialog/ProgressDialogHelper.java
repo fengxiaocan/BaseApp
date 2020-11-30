@@ -2,7 +2,6 @@ package com.app.base.dialog;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.res.ColorStateList;
 import android.os.Build;
 import android.view.Window;
@@ -12,13 +11,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Lifecycle;
 import androidx.lifecycle.LifecycleEventObserver;
-import androidx.lifecycle.LifecycleOwner;
 
+import java.lang.ref.SoftReference;
 import java.util.HashMap;
 import java.util.Map;
 
 public class ProgressDialogHelper {
-    private static Map<String, ProgressDialogHelper> helperHashMap;
+    private static final Map<String, SoftReference<ProgressDialogHelper>> helperHashMap = new HashMap<>();;
 
     private CommonProgressDialog progressDialog;
     private String mHelperName;
@@ -32,21 +31,18 @@ public class ProgressDialogHelper {
      * 初始化Activity
      */
     public static ProgressDialogHelper with(@NonNull AppCompatActivity activity) {
-        if (helperHashMap == null) {
-            helperHashMap = new HashMap<>();
-        }
         final String key = activity.toString();
-        ProgressDialogHelper helper = helperHashMap.get(key);
+        SoftReference<ProgressDialogHelper> reference = helperHashMap.get(key);
+        ProgressDialogHelper helper = null;
+        if (reference != null){
+            helper =reference.get();
+        }
         if (helper == null) {
             helper = new ProgressDialogHelper(activity);
-            helperHashMap.put(key, helper);
-            activity.getLifecycle().addObserver(new LifecycleEventObserver() {
-                @Override
-                public void onStateChanged(@NonNull LifecycleOwner source,
-                                           @NonNull Lifecycle.Event event) {
-                    if (event == Lifecycle.Event.ON_DESTROY) {
-                        destroy(key);
-                    }
+            helperHashMap.put(key, new SoftReference<>(helper));
+            activity.getLifecycle().addObserver((LifecycleEventObserver) (source, event) -> {
+                if (event == Lifecycle.Event.ON_DESTROY) {
+                    destroy(key);
                 }
             });
         }
@@ -54,22 +50,19 @@ public class ProgressDialogHelper {
     }
 
     public static ProgressDialogHelper with(@NonNull Context context) {
-        if (helperHashMap == null) {
-            helperHashMap = new HashMap<>();
-        }
         final String key = context.toString();
-        ProgressDialogHelper helper = helperHashMap.get(key);
+        SoftReference<ProgressDialogHelper> reference = helperHashMap.get(key);
+        ProgressDialogHelper helper = null;
+        if (reference != null){
+            helper =reference.get();
+        }
         if (helper == null) {
             helper = new ProgressDialogHelper(context);
-            helperHashMap.put(key, helper);
+            helperHashMap.put(key, new SoftReference<>(helper));
             if (context instanceof AppCompatActivity) {
-                ((AppCompatActivity) context).getLifecycle().addObserver(new LifecycleEventObserver() {
-                    @Override
-                    public void onStateChanged(@NonNull LifecycleOwner source,
-                                               @NonNull Lifecycle.Event event) {
-                        if (event == Lifecycle.Event.ON_DESTROY) {
-                            destroy(key);
-                        }
+                ((AppCompatActivity) context).getLifecycle().addObserver((LifecycleEventObserver) (source, event) -> {
+                    if (event == Lifecycle.Event.ON_DESTROY) {
+                        destroy(key);
                     }
                 });
             }
@@ -78,21 +71,18 @@ public class ProgressDialogHelper {
     }
 
     public static ProgressDialogHelper with(@NonNull Fragment fragment) {
-        if (helperHashMap == null) {
-            helperHashMap = new HashMap<>();
-        }
         final String key = fragment.toString();
-        ProgressDialogHelper helper = helperHashMap.get(key);
+        SoftReference<ProgressDialogHelper> reference = helperHashMap.get(key);
+        ProgressDialogHelper helper = null;
+        if (reference != null){
+            helper =reference.get();
+        }
         if (helper == null) {
             helper = new ProgressDialogHelper(fragment.getContext());
-            helperHashMap.put(key, helper);
-            fragment.getLifecycle().addObserver(new LifecycleEventObserver() {
-                @Override
-                public void onStateChanged(@NonNull LifecycleOwner source,
-                                           @NonNull Lifecycle.Event event) {
-                    if (event == Lifecycle.Event.ON_DESTROY) {
-                        destroy(key);
-                    }
+            helperHashMap.put(key, new SoftReference<>(helper));
+            fragment.getLifecycle().addObserver((LifecycleEventObserver) (source, event) -> {
+                if (event == Lifecycle.Event.ON_DESTROY) {
+                    destroy(key);
                 }
             });
         }
@@ -102,24 +92,26 @@ public class ProgressDialogHelper {
     public static void destroy(Context context) {
         if (helperHashMap != null) {
             String key = context.toString();
-            ProgressDialogHelper helper = helperHashMap.get(key);
-            if (helper != null) {
-                helper.destroy();
-            }
-            if (helperHashMap.isEmpty()) {
-                helperHashMap = null;
+            SoftReference<ProgressDialogHelper> reference = helperHashMap.get(key);
+            ProgressDialogHelper helper = null;
+            if (reference != null){
+                helper =reference.get();
+                if (helper != null) {
+                    helper.destroy();
+                }
             }
         }
     }
 
     private static void destroy(String key) {
         if (helperHashMap != null) {
-            ProgressDialogHelper helper = helperHashMap.get(key);
-            if (helper != null) {
-                helper.destroy();
-            }
-            if (helperHashMap.isEmpty()) {
-                helperHashMap = null;
+            SoftReference<ProgressDialogHelper> reference = helperHashMap.get(key);
+            ProgressDialogHelper helper = null;
+            if (reference != null){
+                helper =reference.get();
+                if (helper != null) {
+                    helper.destroy();
+                }
             }
         }
     }
@@ -127,12 +119,13 @@ public class ProgressDialogHelper {
     public static void destroy(Activity context) {
         if (helperHashMap != null) {
             String key = context.toString();
-            ProgressDialogHelper helper = helperHashMap.get(key);
-            if (helper != null) {
-                helper.destroy();
-            }
-            if (helperHashMap.isEmpty()) {
-                helperHashMap = null;
+            SoftReference<ProgressDialogHelper> reference = helperHashMap.get(key);
+            ProgressDialogHelper helper = null;
+            if (reference != null){
+                helper =reference.get();
+                if (helper != null) {
+                    helper.destroy();
+                }
             }
         }
     }
@@ -140,24 +133,24 @@ public class ProgressDialogHelper {
     public static void destroy(Fragment context) {
         if (helperHashMap != null) {
             String key = context.toString();
-            ProgressDialogHelper helper = helperHashMap.get(key);
-            if (helper != null) {
-                helper.destroy();
-            }
-            if (helperHashMap.isEmpty()) {
-                helperHashMap = null;
+            SoftReference<ProgressDialogHelper> reference = helperHashMap.get(key);
+            ProgressDialogHelper helper = null;
+            if (reference != null){
+                helper =reference.get();
+                if (helper != null) {
+                    helper.destroy();
+                }
             }
         }
     }
 
     public void destroy() {
-        if (progressDialog.isShowing()) {
-            progressDialog.dismiss();
-            helperHashMap.remove(mHelperName);
-            progressDialog = null;
-        }
-        if (helperHashMap.isEmpty()) {
-            helperHashMap = null;
+        if (helperHashMap != null) {
+            if (progressDialog.isShowing()) {
+                progressDialog.dismiss();
+                helperHashMap.remove(mHelperName);
+                progressDialog = null;
+            }
         }
     }
 
@@ -207,18 +200,8 @@ public class ProgressDialogHelper {
     }
 
     public ProgressDialogHelper dismissListener(final OnDialogDismissListener listener) {
-        progressDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
-            @Override
-            public void onDismiss(DialogInterface dialog) {
-                listener.dismiss();
-            }
-        });
-        progressDialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
-            @Override
-            public void onCancel(DialogInterface dialog) {
-                listener.dismiss();
-            }
-        });
+        progressDialog.setOnDismissListener(dialog -> listener.dismiss());
+        progressDialog.setOnCancelListener(dialog -> listener.dismiss());
         return this;
     }
 
