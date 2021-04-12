@@ -35,12 +35,10 @@ public class DeviceInfo{
     private String HARDWARE;//硬件名称
     private String ID;// 修订版本列表
     private String MODEL;//手机型号(MI XXX)
-    private String SERIAL;//硬件序列号
     private String PRODUCT;//手机制造商
     private int VERSION_SDK_INT;//版本号
 
 
-    @SuppressLint("MissingPermission")
     public DeviceInfo(){
         this.BRAND = Build.BOARD;
         this.MANUFACTURER = Build.MANUFACTURER;
@@ -48,11 +46,6 @@ public class DeviceInfo{
         this.HARDWARE = Build.HARDWARE;
         this.ID = Build.ID;
         this.MODEL = Build.MODEL;
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
-            this.SERIAL = Build.getSerial();
-        } else{
-            this.SERIAL = Build.SERIAL;
-        }
         this.PRODUCT = Build.PRODUCT;
         this.VERSION_SDK_INT = Build.VERSION.SDK_INT;
     }
@@ -61,7 +54,7 @@ public class DeviceInfo{
     public String toString(){
         return "设备的信息{" + "系统定制商='" + BRAND + '\'' + ", 硬件制造商='" + MANUFACTURER + '\'' + ", 硬件识别码='" + FINGERPRINT +
                '\'' + ", 硬件名称='" + HARDWARE + '\'' + ", 修订版本列表='" + ID + '\'' + ", 手机型号='" + MODEL + '\'' +
-               ", 硬件序列号='" + SERIAL + '\'' + ", 手机制造商='" + PRODUCT + '\'' + ", 系统版本号=" + VERSION_SDK_INT + '}';
+                ", 手机制造商='" + PRODUCT + '\'' + ", 系统版本号=" + VERSION_SDK_INT + '}';
     }
 
     public String getBRAND(){
@@ -110,14 +103,6 @@ public class DeviceInfo{
 
     public void setMODEL(String MODEL){
         this.MODEL = MODEL;
-    }
-
-    public String getSERIAL(){
-        return SERIAL;
-    }
-
-    public void setSERIAL(String SERIAL){
-        this.SERIAL = SERIAL;
     }
 
     public String getPRODUCT(){

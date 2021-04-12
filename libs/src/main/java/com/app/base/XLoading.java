@@ -10,17 +10,17 @@ import android.widget.FrameLayout;
 import com.app.base.log.*;
 
 
-public class Xloading{
+public class XLoading {
     public static final int STATUS_LOADING = 1;
     public static final int STATUS_LOAD_SUCCESS = 2;
     public static final int STATUS_LOAD_FAILED = 3;
     public static final int STATUS_EMPTY_DATA = 4;
 
-    private static volatile com.app.base.Xloading mDefault;
+    private static volatile XLoading mDefault;
     private static boolean DEBUG = false;
     private Adapter mAdapter;
 
-    private Xloading(){
+    private XLoading(){
     }
 
     /**
@@ -38,8 +38,8 @@ public class Xloading{
      * @param adapter another adapter different from the default one
      * @return Gloading
      */
-    public static com.app.base.Xloading from(Adapter adapter){
-        com.app.base.Xloading gloading = new com.app.base.Xloading();
+    public static XLoading from(Adapter adapter){
+        XLoading gloading = new XLoading();
         gloading.mAdapter = adapter;
         return gloading;
     }
@@ -49,11 +49,11 @@ public class Xloading{
      *
      * @return default Gloading object
      */
-    public static com.app.base.Xloading getDefault(){
+    public static XLoading getDefault(){
         if(mDefault == null){
-            synchronized(com.app.base.Xloading.class){
+            synchronized(XLoading.class){
                 if(mDefault == null){
-                    mDefault = new com.app.base.Xloading();
+                    mDefault = new XLoading();
                 }
             }
         }
@@ -71,7 +71,7 @@ public class Xloading{
 
     private static void printLog(String msg){
         if(DEBUG){
-            LogUtils.e("Xloading",msg);
+            LogUtils.e("XLoading",msg);
         }
     }
 
@@ -143,7 +143,7 @@ public class Xloading{
 
     /**
      * Gloading holder<br>
-     * create by {@link com.app.base.Xloading#wrap(Activity)} or {@link com.app.base.Xloading#wrap(View)}<br>
+     * create by {@link XLoading#wrap(Activity)} or {@link XLoading#wrap(View)}<br>
      * the core API for showing all status view
      */
     public static class Holder{

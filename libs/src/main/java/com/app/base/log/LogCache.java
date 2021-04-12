@@ -2,15 +2,6 @@ package com.app.base.log;
 
 import java.util.LinkedList;
 
-/**
- * @name： FingerprintLoader
- * @package： com.evil.com.dgtle.baselib.log
- * @author: Noah.冯 QQ:1066537317
- * @time: 10:54
- * @version: 1.1
- * @desc： 日志缓存
- */
-
 class LogCache{
     private static LogCache ourInstance;
     //最大缓存数量
