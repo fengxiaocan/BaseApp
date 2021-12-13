@@ -28,6 +28,6 @@ android {
 dependencies {
     compileOnly 'androidx.appcompat:appcompat:latest.release'
     compileOnly 'com.google.android.material:material:latest.release'
-    compileOnly 'com.github.fengxiaocan:Tools:v1.0.2'
+    compileOnly 'com.github.fengxiaocan:Tools:latest.release'
 //    implementation 'org.litepal.android:java:latest.release'
 }
